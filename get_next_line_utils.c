@@ -32,19 +32,21 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	if (s == NULL)
 		return (0);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if ((ft_strlen(s) - start) < len)
-		str = (char *)malloc(sizeof(char) * (ft_strlen(s) - start + 1));
-	else
-		str = (char *)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	while (s[i + start] != '\0' && i < len)
+	if (start > ft_strlen(s))
 	{
-		str[i] = s[start + i];
-		i++;
+		str = malloc(sizeof(char) * (1));
+		if (!str)
+			return (NULL);
+		str[0] = '\0';
+		return (str);
 	}
+	if (ft_strlen(s) - start < len)
+		len = ft_strlen(s) - start;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (start < ft_strlen(s) && i < len && s[start])
+		str[i++] = s[start++];
 	str[i] = '\0';
 	return (str);
 }

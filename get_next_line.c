@@ -21,6 +21,7 @@ char	*ft_free(char **str)
 
 char	*get_next_line(int fd)
 {
+	static char	*storage = {0};
 	char	*line;
 
 
