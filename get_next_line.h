@@ -6,12 +6,16 @@
 /*   By: rherraiz <rherraiz@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:02:11 by rherraiz          #+#    #+#             */
-/*   Updated: 2024/03/22 03:56:26 by root             ###   ########.fr       */
+/*   Updated: 2024/03/26 12:05:40 by rherraiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10 
+# endif
 
 # include <stdlib.h>
 # include <unistd.h>
