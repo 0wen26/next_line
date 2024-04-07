@@ -6,7 +6,7 @@
 /*   By: rherraiz <rherraiz@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 19:02:57 by rherraiz          #+#    #+#             */
-/*   Updated: 2024/04/01 19:35:40 by rherraiz         ###   ########.fr       */
+/*   Updated: 2024/04/07 21:07:38 by rherraiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,57 @@ char	*ft_free(char **str)
 	return (NULL);
 }
 
-char	*get_next_line(int fd)
+char	*ridbuff(int fd, char *storage)
 {
-	static char	*storage = {0};
-	char	*line;
-	int i;
+	int		rid;
+	char	*buffer;
 
-	i =0;
-	line = malloc(sizeof(char) +1);
-	if (fd < 0)
-		return (NULL);
-	
-	while (!ft_strchr(line,'\n'))
+	rid = 1;
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	while (rid > 0 && !ft_strchr(buffer, '\n'))
 	{
-		read(fd, line, 10);
-		storage = ft_strjoin(storage, line);
+		rid = read(fd, buffer, BUFFER_SIZE);
+		if (rid > 0)
+		{
+			buffer[rid] = '\0';
+			storage = ft_strjoin(storage, buffer);
+		}
 	}
-	while (storage[i] != '\n')
-		i++;
-	ft_substr(storage,0,i +1);
+	free(buffer);
+	if (rid == -1)
+		return (ft_free(&storage));
 	return (storage);
 }
 
+char	*get_next_line(int fd)
+{
+	static char	*storage;
+	char		*line;
+	int			i;
+
+	i = 0;
+	if (fd < 0)
+		return (NULL);
+	if (!storage)
+		storage = ft_strdup("");
+	if ((storage && !ft_strchr(storage, '\n')) || !storage)
+		storage = ridbuff(fd, storage);
+	while (storage[i] != '\n' && storage[i])
+		i++;
+	line = ft_substr(storage, 0, i + 1);
+	storage = ft_substr(storage, i + 1, (ft_strlen(storage)) - i);
+	if (!line)
+		return (NULL);
+	if (!storage)
+		return (NULL);
+	return (line);
+}
+/*
 int main()
 {
 	int fd;
-	fd =open("file.txt", O_RDWR);
+	fd =open("hola", O_RDWR);
 	printf("%s",get_next_line(fd));
-
 	return 0;
 }
+*/

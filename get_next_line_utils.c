@@ -6,7 +6,7 @@
 /*   By: rherraiz <rherraiz@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:13:23 by rherraiz          #+#    #+#             */
-/*   Updated: 2024/03/22 05:19:26 by root             ###   ########.fr       */
+/*   Updated: 2024/04/07 19:06:54 by rherraiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,28 @@ char	*ft_strjoin(char *s1, char *s2)
 	str[i + j] = '\0';
 	free(s1);
 	return (str);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*ret;
+	size_t	len;
+	size_t	i;
+
+	i = 0;
+	len = 0;
+	while (s1[len])
+		++s1;
+	ret = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }
 
 char	*ft_strchr(const char *str, int c)
