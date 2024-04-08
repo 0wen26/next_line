@@ -26,6 +26,9 @@ char	*ridbuff(int fd, char *storage)
 
 	rid = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (ft_free(&storage));
+	buffer[0] = '\0';
 	while (rid > 0 && !ft_strchr(buffer, '\n'))
 	{
 		rid = read(fd, buffer, BUFFER_SIZE);
@@ -48,7 +51,7 @@ char	*get_next_line(int fd)
 	int			i;
 
 	i = 0;
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	if (!storage)
 		storage = ft_strdup("");
@@ -57,9 +60,9 @@ char	*get_next_line(int fd)
 	while (storage[i] != '\n' && storage[i])
 		i++;
 	line = ft_substr(storage, 0, i + 1);
-	storage = ft_substr(storage, i + 1, (ft_strlen(storage)) - i);
 	if (!line)
 		return (NULL);
+	storage = ft_substr(storage, i + 1, (ft_strlen(storage)) - i);
 	if (!storage)
 		return (NULL);
 	return (line);
@@ -68,7 +71,7 @@ char	*get_next_line(int fd)
 int main()
 {
 	int fd;
-	fd =open("hola", O_RDWR);
+	fd =open("file.txt", O_RDWR);
 	printf("%s",get_next_line(fd));
 	return 0;
 }

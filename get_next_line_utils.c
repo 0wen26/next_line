@@ -117,5 +117,5 @@ char	*ft_strchr(const char *str, int c)
 	}
 	if (s[i] == '\0' && j == '\0')
 		return (s + i);
-	return (NULL);
+	return (0);
 }
