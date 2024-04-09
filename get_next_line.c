@@ -69,7 +69,7 @@ char	*get_next_line(int fd)
 		storage = ridbuff(fd, storage);
 	if (!storage)
 		return (NULL);
-	while (storage[i] != '\n' && storage[i])
+	while (storage[i] != '\n' && storage[i] != '\0')
 		i++;
 	line = ft_substr(storage, 0, i + 1);
 	if (!line)
